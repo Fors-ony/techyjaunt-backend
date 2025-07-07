@@ -1,4 +1,4 @@
-import { asyncHandler } from '../../lib/asyncHandler.js';
+import { asyncHandler } from '../../utils/asyncHandler.js';
 import { BadRequestException } from '../../lib/error-definitions.js';
 import { registerFarmerSchema } from '../requests/famer.request.js';
 import { loginFarmer, registerFarmer } from '../services/farmer.service.js';

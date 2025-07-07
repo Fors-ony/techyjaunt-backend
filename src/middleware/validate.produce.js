@@ -1,9 +1,9 @@
-import { produceValidationSchema } from '../farmLink/requests/produce.request.js';
+import { createProduceSchema } from '../farmLink/requests/produce.request.js';
 import { BadRequestException } from '../lib/error-definitions.js';
 
 // Validate inputs from user on products
-const validateProduct = (req, res, next) => {
-  const { error } = produceValidationSchema.validate(req.body, {
+const validateProduce = (req, res, next) => {
+  const { error } = createProduceSchema.validate(req.body, {
     abortEarly: false,
   });
 
@@ -27,4 +27,4 @@ const validateProduct = (req, res, next) => {
   next(); // Continue to controller
 };
 
-export default validateProduct;
+export default validateProduce;

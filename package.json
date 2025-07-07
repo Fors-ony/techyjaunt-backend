@@ -1,15 +1,16 @@
 {
   "name": "farm-link",
   "version": "1.0.0",
-  "main": "src/main.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
     "db:migrate": "sequelize-cli db:migrate --config config/config.cjs",
     "db:migrate:undo": "sequelize-cli db:migrate:undo --config config/config.cjs",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "start:dev": "nodemon src/main.js",
-    "start": "node src/main.js"
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "generate-docs": "node src/docs/generate-swagger.js"
   },
   "keywords": [
     "farm",
@@ -39,6 +40,8 @@
     "pg": "^8.15.6",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^11.1.0",
     "winston": "^3.17.0"
   },

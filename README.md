@@ -21,8 +21,6 @@ FarmLink is designed to empower smallholder farmers by providing a digital marke
 - CORS, Helmet, Compression
 - dotenv for environment configuration
 
-Frontend and additional tools will be added later.
-
 ---
 
 ## 📁 Project Structure (WIP)

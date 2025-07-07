@@ -35,11 +35,9 @@ Buyer.init(
       allowNull: false,
     },
 
-    // In models/Buyer.js
     produce_preferences: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true, // Optional during registration
-      defaultValue: [], // Optional default
+      allowNull: true,
     },
 
     password: {

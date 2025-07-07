@@ -1,7 +1,8 @@
-import Farmer from '../models/farmer.model.js';
+import Farmer from '../farmLink/models/farmer.model.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 // Ensure the potential user is a farmer
-export default async function ensureFarmer(req, res, next) {
+export const ensureFarmer = asyncHandler(async (req, res, next) => {
   if (!req.user || !req.user.id) {
     return res.status(401).json({ message: 'Not authenticated' });
   }
@@ -11,6 +12,8 @@ export default async function ensureFarmer(req, res, next) {
     return res.status(403).json({ message: 'Access denied: farmers only' });
   }
 
-  // Attach the full Farmer instance
+  // the farmer instance to req
+  req.farmer = farmer;
+
   next();
-}
+});

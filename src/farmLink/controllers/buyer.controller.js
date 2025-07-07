@@ -1,4 +1,4 @@
-import { asyncHandler } from '../../lib/asyncHandler.js';
+import { asyncHandler } from '../../utils/asyncHandler.js';
 import { BadRequestException } from '../../lib/error-definitions.js';
 import { loginBuyer, registerBuyer } from '../services/buyer.service.js';
 import { registerBuyerSchema } from '../requests/buyer.request.js';
@@ -9,18 +9,43 @@ import {
 
 export const registerBuyerController = asyncHandler(async (req, res) => {
   // Validate input
-  const { error } = registerBuyerSchema.validate(req.body);
+  const { error, value } = registerBuyerSchema.validate(req.body, {
+    abortEarly: false,
+    allowUnknown: false,
+    stripUnknown: true,
+  });
+
+  // If validation fails, throw BadRequestException with details
   if (error) {
-    throw new BadRequestException(error.details[0].message);
+    const validationErrors = {};
+    error.details.forEach((detail) => {
+      const field = detail.path[0] || 'unknown';
+      validationErrors[field] = detail.message.replace(/"/g, '');
+    });
+
+    throw new BadRequestException('Validation failed', validationErrors);
   }
 
-  // Call registration service
-  const buyer = await registerBuyer(req.body);
+  // Ensure produce_preferences is an array or null
+  if (!Array.isArray(req.body.produce_preferences)) {
+    value.produce_preferences = null;
+  }
+
+  // Register buyer with sanitized and validated data
+  const buyer = await registerBuyer(value);
+
+  // Exclude sensitive fields
+  const {
+    password,
+    reset_password_token,
+    reset_password_expires,
+    ...buyerData
+  } = buyer;
 
   return res.status(201).json({
     success: true,
     message: 'Successful. Please log in.',
-    buyer,
+    buyer: buyerData,
   });
 });
 

@@ -9,14 +9,3 @@ node_modules/
 logs/
 npm-debug.log*
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# Build artifacts
-dist/
-build/
-coverage/
-
-# Sequelize CLI files (optional)
-*.sqlite
